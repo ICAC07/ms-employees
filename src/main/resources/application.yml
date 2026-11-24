@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: ms-employee
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_APP_USER}
+    password: ${DB_APP_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+app:
+  security:
+    username: ${APP_SECURITY_USERNAME}
+    password: ${APP_SECURITY_PASSWORD}
+  pagination:
+    default-limit: 20
+    max-limit: 100
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    root: INFO
+    com.homelab.employeeservice: INFO
+  pattern:
+    level: "%5p [%X{correlationId:-}]"
