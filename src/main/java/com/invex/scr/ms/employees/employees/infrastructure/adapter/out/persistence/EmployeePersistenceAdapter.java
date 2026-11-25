@@ -37,6 +37,16 @@ public class EmployeePersistenceAdapter implements EmployeeRepositoryPort {
   }
 
   @Override
+  public List<Employee> findAll() {
+    return mapper.toDomains(repository.findAll());
+  }
+
+  @Override
+  public List<Employee> findByNameContaining(String firstName) {
+    return mapper.toDomains(repository.findByFirstNameContains(firstName));
+  }
+
+  @Override
   public List<Employee> findAfter(long afterId, int maxResults, boolean includeInactive) {
     return repository.findPage(afterId, includeInactive, PageRequest.ofSize(maxResults)).stream()
         .map(mapper::toDomain)

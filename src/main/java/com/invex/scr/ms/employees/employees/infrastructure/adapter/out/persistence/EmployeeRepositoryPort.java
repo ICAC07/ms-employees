@@ -12,7 +12,13 @@ public interface EmployeeRepositoryPort {
 
   Optional<Employee> findById(long id);
 
+  List<Employee> findAll();
+
+  List<Employee> findByNameContaining(String firstName);
+
+  // Deprecated
   List<Employee> findAfter(long afterId, int maxResults, boolean includeInactive);
 
+  // Deprecated
   List<Employee> searchAfter(String term, long afterId, int maxResults, boolean includeInactive);
 }

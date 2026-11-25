@@ -34,4 +34,6 @@ interface EmployeeJpaRepository extends JpaRepository<EmployeeEntity, Long> {
       @Param("afterId") long afterId,
       @Param("includeInactive") boolean includeInactive,
       Pageable pageable);
+
+  List<EmployeeEntity> findByFirstNameContains(String firstName);
 }

@@ -2,9 +2,9 @@ package com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controlle
 
 import com.invex.scr.ms.employees.employees.domain.model.Employee;
 import com.invex.scr.ms.employees.employees.domain.model.EmployeeChanges;
-import com.invex.scr.ms.employees.employees.domain.model.EmployeePage;
 import com.invex.scr.ms.employees.employees.domain.model.NewEmployee;
 import java.time.Clock;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -57,8 +57,28 @@ public class EmployeeWebMapper {
         employee.active());
   }
 
-  public EmployeePageResponse toResponse(EmployeePage page) {
+  /*
+  public EmployeePageResponse toResponse(List<EmployeePage> page) {
     return new EmployeePageResponse(
         page.items().stream().map(this::toResponse).toList(), page.nextCursor());
+  }
+  */
+  public EmployeeListResponse toResponse(List<Employee> employees) {
+    return new EmployeeListResponse(
+        employees.stream()
+            .map(employee ->
+                new EmployeeResponse(
+                    employee.id(),
+                    employee.firstName(),
+                    employee.middleName(),
+                    employee.paternalSurname(),
+                    employee.maternalSurname(),
+                    employee.age(clock),
+                    employee.gender(),
+                    employee.birthDate(),
+                    employee.jobTitle(),
+                    employee.createdAt(),
+                    employee.active()))
+            .toList());
   }
 }
