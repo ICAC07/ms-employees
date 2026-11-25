@@ -4,7 +4,9 @@ import com.invex.scr.ms.employees.employees.domain.model.Gender;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.time.LocalDate;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "employee")
 public class EmployeeEntity {
@@ -65,7 +67,7 @@ public class EmployeeEntity {
     this.createdAt = createdAt;
     this.active = active;
   }
-
+  /*
   public Long getId() {
     return id;
   }
@@ -105,4 +107,5 @@ public class EmployeeEntity {
   public boolean isActive() {
     return active;
   }
+  */
 }

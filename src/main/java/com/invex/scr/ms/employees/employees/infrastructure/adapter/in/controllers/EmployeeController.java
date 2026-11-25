@@ -7,7 +7,10 @@ import com.invex.scr.ms.employees.employees.application.find.ListEmployeesUseCas
 import com.invex.scr.ms.employees.employees.application.find.SearchEmployeesUseCase;
 import com.invex.scr.ms.employees.employees.application.update.UpdateEmployeeUseCase;
 import com.invex.scr.ms.employees.employees.domain.model.EmployeeRules;
-import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.*;
+import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.CreateEmployeeRequest;
+import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.EmployeeResponse;
+import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.EmployeeWebMapper;
+import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.UpdateEmployeeRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -48,41 +51,27 @@ public class EmployeeController {
   }
 
   /**
-   * {@code GET /employees}: lists employees page by page.
+   * {@code GET /employees}: lists employees.
    *
-   * @param cursor opaque cursor from a previous page, optional
-   * @param limit page size, optional
-   * @param includeInactive whether logically deleted employees are included, {@code false} by
-   *     default
-   * @return one page of employees
+   * @return list of employees
    */
   @GetMapping
-  @Operation(summary = "Lista empleados con paginación por cursor (solo activos por defecto)")
-  public EmployeePageResponse list(
-      @RequestParam(required = false) String cursor,
-      @RequestParam(required = false) Integer limit,
-      @RequestParam(defaultValue = "false") boolean includeInactive) {
-    return mapper.toResponse(listEmployees.list(cursor, limit, includeInactive));
+  @Operation(summary = "Lista de empleados")
+  public List<EmployeeResponse> list() {
+    return mapper.toResponse(listEmployees.list());
   }
 
   /**
    * {@code GET /employees/search}: partial, case-insensitive search by name.
    *
    * @param name text to look for, not blank, at most 100 characters
-   * @param cursor opaque cursor from a previous page, optional
-   * @param limit page size, optional
-   * @param includeInactive whether logically deleted employees are included, {@code false} by
-   *     default
-   * @return one page of matches
+   * @return list of matches
    */
   @GetMapping(WebConstants.SEARCH_PATH)
-  @Operation(summary = "Busca por coincidencia parcial en nombres y apellidos")
-  public EmployeePageResponse search(
-      @RequestParam @NotBlank @Size(max = EmployeeRules.MAX_SEARCH_LENGTH) String name,
-      @RequestParam(required = false) String cursor,
-      @RequestParam(required = false) Integer limit,
-      @RequestParam(defaultValue = "false") boolean includeInactive) {
-    return mapper.toResponse(searchEmployees.search(name, cursor, limit, includeInactive));
+  @Operation(summary = "Busca por coincidencia parcial en nombres")
+  public List<EmployeeResponse> search(
+      @RequestParam @NotBlank @Size(max = EmployeeRules.MAX_SEARCH_LENGTH) String name) {
+    return mapper.toResponse(searchEmployees.search(name));
   }
 
   /**

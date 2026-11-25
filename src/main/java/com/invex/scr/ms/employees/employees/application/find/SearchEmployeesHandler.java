@@ -1,29 +1,23 @@
 package com.invex.scr.ms.employees.employees.application.find;
 
-import com.invex.scr.ms.employees.employees.application.service.CursorPaginator;
 import com.invex.scr.ms.employees.employees.domain.exception.InvalidQueryException;
-import com.invex.scr.ms.employees.employees.domain.model.EmployeePage;
+import com.invex.scr.ms.employees.employees.domain.model.Employee;
 import com.invex.scr.ms.employees.employees.domain.model.EmployeeRules;
 import com.invex.scr.ms.employees.employees.infrastructure.adapter.out.persistence.EmployeeRepositoryPort;
+import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class SearchEmployeesHandler implements SearchEmployeesUseCase {
-
   private final EmployeeRepositoryPort repository;
-
-  private final CursorPaginator paginator;
-
-  public SearchEmployeesHandler(EmployeeRepositoryPort repository, CursorPaginator paginator) {
-    this.repository = repository;
-    this.paginator = paginator;
-  }
 
   @Override
   @Transactional(readOnly = true)
-  public EmployeePage search(String name, String cursor, Integer limit, boolean includeInactive) {
+  public List<Employee> search(String name) {
     String term =
         Optional.ofNullable(name)
             .map(String::strip)
@@ -33,10 +27,6 @@ public class SearchEmployeesHandler implements SearchEmployeesUseCase {
       throw new InvalidQueryException(
           "El nombre a buscar no puede superar " + EmployeeRules.MAX_SEARCH_LENGTH + " caracteres");
     }
-    return paginator.paginate(
-        cursor,
-        limit,
-        (afterId, maxResults) ->
-            repository.searchAfter(term, afterId, maxResults, includeInactive));
+    return repository.findByNameContaining(name);
   }
 }

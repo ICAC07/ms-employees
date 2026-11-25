@@ -1,36 +1,15 @@
 package com.invex.scr.ms.employees.employees.infrastructure.adapter.out.persistence;
 
 import com.invex.scr.ms.employees.employees.domain.model.Employee;
-import org.springframework.stereotype.Component;
+import java.util.List;
+import org.mapstruct.Mapper;
 
-@Component
-public class EmployeePersistenceMapper {
+@Mapper(componentModel = "spring")
+public interface EmployeePersistenceMapper {
 
-  public EmployeeEntity toEntity(Employee employee) {
-    return new EmployeeEntity(
-        employee.id(),
-        employee.firstName(),
-        employee.middleName(),
-        employee.paternalSurname(),
-        employee.maternalSurname(),
-        employee.gender(),
-        employee.birthDate(),
-        employee.jobTitle(),
-        employee.createdAt(),
-        employee.active());
-  }
+  EmployeeEntity toEntity(Employee employee);
 
-  public Employee toDomain(EmployeeEntity entity) {
-    return new Employee(
-        entity.getId(),
-        entity.getFirstName(),
-        entity.getMiddleName(),
-        entity.getPaternalSurname(),
-        entity.getMaternalSurname(),
-        entity.getGender(),
-        entity.getBirthDate(),
-        entity.getJobTitle(),
-        entity.getCreatedAt(),
-        entity.isActive());
-  }
+  Employee toDomain(EmployeeEntity entity);
+
+  List<Employee> toDomains(List<EmployeeEntity> entities);
 }

@@ -12,7 +12,7 @@ public interface EmployeeRepositoryPort {
 
   Optional<Employee> findById(long id);
 
-  List<Employee> findAfter(long afterId, int maxResults, boolean includeInactive);
+  List<Employee> findAll();
 
-  List<Employee> searchAfter(String term, long afterId, int maxResults, boolean includeInactive);
+  List<Employee> findByNameContaining(String firstName);
 }
