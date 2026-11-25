@@ -6,17 +6,14 @@ import com.invex.scr.ms.employees.employees.domain.model.EmployeeRules;
 import com.invex.scr.ms.employees.employees.infrastructure.adapter.out.persistence.EmployeeRepositoryPort;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class SearchEmployeesHandler implements SearchEmployeesUseCase {
-
   private final EmployeeRepositoryPort repository;
-
-  public SearchEmployeesHandler(EmployeeRepositoryPort repository) {
-    this.repository = repository;
-  }
 
   @Override
   @Transactional(readOnly = true)

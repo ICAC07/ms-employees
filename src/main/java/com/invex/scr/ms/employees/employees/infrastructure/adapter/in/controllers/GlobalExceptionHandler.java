@@ -5,8 +5,7 @@ import com.invex.scr.ms.employees.employees.domain.exception.InvalidEmployeeExce
 import com.invex.scr.ms.employees.employees.domain.exception.InvalidQueryException;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -18,10 +17,9 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
-  private static final Logger LOG = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   @ExceptionHandler(EmployeeNotFoundException.class)
   ProblemDetail handleNotFound(EmployeeNotFoundException ex) {
@@ -35,7 +33,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(Exception.class)
   ProblemDetail handleUnexpected(Exception ex) {
-    LOG.error("Error no controlado", ex);
+    log.error("Error no controlado", ex);
     return problem(
         HttpStatus.INTERNAL_SERVER_ERROR,
         WebConstants.INTERNAL_TITLE,

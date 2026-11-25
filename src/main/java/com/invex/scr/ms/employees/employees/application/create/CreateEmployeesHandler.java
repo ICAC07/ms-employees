@@ -12,9 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CreateEmployeesHandler implements CreateEmployeesUseCase {
-
   private final EmployeeRepositoryPort repository;
-
   private final Clock clock;
 
   public CreateEmployeesHandler(EmployeeRepositoryPort repository, Clock clock) {

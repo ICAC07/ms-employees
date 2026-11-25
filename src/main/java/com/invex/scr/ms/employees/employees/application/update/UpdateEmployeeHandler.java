@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UpdateEmployeeHandler implements UpdateEmployeeUseCase {
-
   private final EmployeeRepositoryPort repository;
   private final Clock clock;
 

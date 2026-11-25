@@ -5,16 +5,13 @@ import com.invex.scr.ms.employees.employees.domain.model.EmployeeChanges;
 import com.invex.scr.ms.employees.employees.domain.model.NewEmployee;
 import java.time.Clock;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class EmployeeWebMapper {
-
   private final Clock clock;
-
-  public EmployeeWebMapper(Clock clock) {
-    this.clock = clock;
-  }
 
   public NewEmployee toNewEmployee(CreateEmployeeRequest request) {
     return new NewEmployee(
