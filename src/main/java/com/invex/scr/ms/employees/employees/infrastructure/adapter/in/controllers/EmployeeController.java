@@ -7,7 +7,10 @@ import com.invex.scr.ms.employees.employees.application.find.ListEmployeesUseCas
 import com.invex.scr.ms.employees.employees.application.find.SearchEmployeesUseCase;
 import com.invex.scr.ms.employees.employees.application.update.UpdateEmployeeUseCase;
 import com.invex.scr.ms.employees.employees.domain.model.EmployeeRules;
-import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.*;
+import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.CreateEmployeeRequest;
+import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.EmployeeResponse;
+import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.EmployeeWebMapper;
+import com.invex.scr.ms.employees.employees.infrastructure.adapter.in.controllers.dto.UpdateEmployeeRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -54,7 +57,7 @@ public class EmployeeController {
    */
   @GetMapping
   @Operation(summary = "Lista de empleados")
-  public EmployeeListResponse list() {
+  public List<EmployeeResponse> list() {
     return mapper.toResponse(listEmployees.list());
   }
 
@@ -66,7 +69,7 @@ public class EmployeeController {
    */
   @GetMapping(WebConstants.SEARCH_PATH)
   @Operation(summary = "Busca por coincidencia parcial en nombres")
-  public EmployeeListResponse search(
+  public List<EmployeeResponse> search(
       @RequestParam @NotBlank @Size(max = EmployeeRules.MAX_SEARCH_LENGTH) String name) {
     return mapper.toResponse(searchEmployees.search(name));
   }
